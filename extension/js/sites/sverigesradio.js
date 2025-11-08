@@ -44,7 +44,7 @@ function callback(stream, data) {
 
 export default [
   {
-    re: /^https?:\/\/(?:www\.)?sverigesradio\.se\.?(\/.*)/,
+    re: [/^https?:\/\/(?:www\.)?sverigesradio\.se\.?(\/.*)/],
     func: async () => {
       // Find audio streams by looking for data-audio-id attributes
       const injectionResult = await chrome.scripting.executeScript({

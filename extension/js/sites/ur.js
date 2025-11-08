@@ -54,14 +54,14 @@ async function fetchProgram(programId, title) {
 
 export default [
   {
-    re: /^https?:\/\/(?:www\.)?urplay\.se\.?\/program\/(\d+)/,
+    re: [/^https?:\/\/(?:www\.)?urplay\.se\.?\/program\/(\d+)/],
     func: async (ret, url) => {
       const programId = ret[1];
       await fetchProgram(programId);
     },
   },
   {
-    re: /^https?:\/\/(?:www\.)?urplay\.se\.?\//,
+    re: [/^https?:\/\/(?:www\.)?urplay\.se\.?\//],
     func: async (_, url) => {
       const nextData = await fetchPageData(url);
       if (!nextData) {

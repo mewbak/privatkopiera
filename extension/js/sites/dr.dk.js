@@ -43,7 +43,7 @@ function callback(streams) {
 
 export default [
   {
-    re: /^https?:\/\/(?:www\.)?dr\.dk\.?\/.*_(\d+)/,
+    re: [/^https?:\/\/(?:www\.)?dr\.dk\.?\/.*_(\d+)/],
     func: async (ret) => {
       const videoId = ret[1];
       console.log('videoId', videoId);

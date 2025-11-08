@@ -311,13 +311,17 @@ export async function processPlaylist(url) {
 
 async function call_func() {
   info('Laddar, var god vänta...');
-  const ret = site.re.exec(tab.url);
-  if (ret) {
-    try {
-      await site.func(ret, url);
-    } catch (err) {
-      info(`Error: ${err.message}`);
-      throw err;
+
+  for (const re of site.re) {
+    const ret = re.exec(tab.url);
+    if (ret) {
+      try {
+        await site.func(ret, url);
+      } catch (err) {
+        info(`Error: ${err.message}`);
+        throw err;
+      }
+      return;
     }
   }
 }
@@ -453,7 +457,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   $('#url').value = tab.url;
   console.log(tab.url);
 
-  site = matchers.find((m) => m.re.test(tab.url));
+  site = matchers.find((m) => m.re.some((re) => re.test(tab.url)));
   if (site) {
     if (site.permissions) {
       const granted = await chrome.permissions.contains(site.permissions);

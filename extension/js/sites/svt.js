@@ -5,12 +5,15 @@
 // https://api.svt.se/video/e7Yd7x9
 //
 // Example URL:
-// https://www.svtplay.se/video/2520376/pippi-langstrump/pippi-langstrump-sasong-1-avsnitt-1
+// https://www.svtplay.se/video/jNdox18/pippi-langstrump/1-pippi-flyttar-in-i-villa-villekulla
 // Data URL:
-// https://api.svt.se/video/2520376
+// https://api.svt.se/video/jNdox18
 //
 // https://www.svtplay.se/klipp/jVwXaEx/vem-ar-han-egentligen
 // https://api.svt.se/video/jVwXaEx
+//
+// https://www.svtbarn.se/bluey/squash/j1yM6LB
+// https://api.svt.se/video/j1yM6LB
 //
 // SVT Play Live:
 // Example URL:
@@ -147,7 +150,7 @@ function callback(data, fetchPlaylist = true) {
 
 export default [
   {
-    re: /^https?:\/\/(?:www\.)?svtplay\.se\.?\/kanaler(?:\/([^\/?]+)|\?selectedChannel=([^\/?]+))/,
+    re: [/^https?:\/\/(?:www\.)?svtplay\.se\.?\/kanaler(?:\/([^\/?]+)|\?selectedChannel=([^\/?]+))/],
     func: (ret) => {
       let ch = ret[1] || ret[2];
       if (ch === 'svtbarn') {
@@ -162,7 +165,10 @@ export default [
     },
   },
   {
-    re: /^https?:\/\/(?:www\.)?svtplay\.se\.?\/(?:video|klipp)\/([a-zA-Z0-9]+)\/?/,
+    re: [
+      /^https?:\/\/(?:www\.)?svtplay\.se\.?\/(?:video|klipp)\/([a-zA-Z0-9]+)\/?/,
+      /^https?:\/\/(?:www\.)?svtbarn\.se\.?\/[^/]+\/[^/]+\/([a-zA-Z0-9]+)\/?/,
+    ],
     func: (ret) => {
       console.log(ret);
       const videoId = ret[1];
@@ -177,13 +183,13 @@ export default [
     },
   },
   {
-    re: /^https?:\/\/(?:www\.)?svtplay\.se\.?\//,
+    re: [/^https?:\/\/(?:www\.)?svtplay\.se\.?\//],
     func: () => {
       info('Navigera till ett avsnitt för att använda Privatkopiera.');
     },
   },
   {
-    re: /^https?:\/\/(?:www\.)?svt\.se\.?\/videoplayer-embed\/([^/?]+)/,
+    re: [/^https?:\/\/(?:www\.)?svt\.se\.?\/videoplayer-embed\/([^/?]+)/],
     func: (ret) => {
       // https://www.svt.se/videoplayer-embed/jXApWXa
       const videoId = ret[1];
@@ -198,7 +204,7 @@ export default [
     },
   },
   {
-    re: /^https?:\/\/recept\.svt\.se\.?\//,
+    re: [/^https?:\/\/recept\.svt\.se\.?\//],
     func: async (_, url) => {
       const data = await fetchPageData(url);
       const videoIds = Object.values(data.props.pageProps.__APOLLO_STATE__)
@@ -222,7 +228,7 @@ export default [
     },
   },
   {
-    re: /^https?:\/\/(?:www\.)?svt\.se\.?\//,
+    re: [/^https?:\/\/(?:www\.)?svt\.se\.?\//],
     func: async (_, url) => {
       let ret;
       if (

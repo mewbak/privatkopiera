@@ -66,7 +66,7 @@ function error(err) {
 
 export default [
   {
-    re: /^https?:\/\/(?:www\.)?tv4play\.se\.?\/(?:video|program|klipp|korthet)\/([0-9a-f]+)/,
+    re: [/^https?:\/\/(?:www\.)?tv4play\.se\.?\/(?:video|program|klipp|korthet)\/([0-9a-f]+)/],
     func: async (ret) => {
       const videoId = ret[1];
       updateFilename(`${videoId}.${options.default_video_file_extension}`);
@@ -144,7 +144,7 @@ export default [
     },
   },
   {
-    re: /^https?:\/\/(?:www\.)?tv4\.se\.?\//,
+    re: [/^https?:\/\/(?:www\.)?tv4\.se\.?\//],
     func: async (_, url) => {
       const data = await fetchPageData(url);
       const videoIds = Object.values(data.props.apolloState)

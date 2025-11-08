@@ -124,7 +124,7 @@ function podcastCallback(data) {
 
 export default [
   {
-    re: /^https?:\/\/radio\.nrk\.no\.?\/serie[^A-Z]*\/([A-Z][A-Z0-9]+)/,
+    re: [/^https?:\/\/radio\.nrk\.no\.?\/serie[^A-Z]*\/([A-Z][A-Z0-9]+)/],
     func: async (ret) => {
       const id = ret[1];
       const dataUrl = `https://psapi.nrk.no/playback/manifest/program/${id}`;
@@ -139,7 +139,7 @@ export default [
     },
   },
   {
-    re: /^https?:\/\/radio\.nrk\.no\.?\/pod[ck]ast\/.+\/(l_[0-9a-f]{8}\b-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-\b[0-9a-f]{12}\b)/,
+    re: [/^https?:\/\/radio\.nrk\.no\.?\/pod[ck]ast\/.+\/(l_[0-9a-f]{8}\b-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-\b[0-9a-f]{12}\b)/],
     func: async (ret) => {
       // https://radio.nrk.no/podkast/bjoernen_lyver/l_709fe866-13a5-498d-9fe8-6613a5d98d1f
       // https://psapi.nrk.no/playback/metadata/l_709fe866-13a5-498d-9fe8-6613a5d98d1f
@@ -158,7 +158,7 @@ export default [
     },
   },
   {
-    re: /^https?:\/\/radio\.nrk\.no\.?\/serie\/.+\/(l_[0-9a-f]{8}\b-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-\b[0-9a-f]{12}\b)/,
+    re: [/^https?:\/\/radio\.nrk\.no\.?\/serie\/.+\/(l_[0-9a-f]{8}\b-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-\b[0-9a-f]{12}\b)/],
     func: async (ret) => {
       // https://radio.nrk.no/serie/tett-paa-norske-artister/sesong/2018/MYNF51000518
       const dataUrl = `https://psapi.nrk.no/playback/manifest/program/${ret[1]}`;
@@ -175,7 +175,7 @@ export default [
     },
   },
   {
-    re: /^https?:\/\/(?:tv|radio)\.nrk\.no\.?\//,
+    re: [/^https?:\/\/(?:tv|radio)\.nrk\.no\.?\//],
     func: async (_, url) => {
       const pageData = await fetchPageData(url, 'pageData');
       if (!pageData) {
